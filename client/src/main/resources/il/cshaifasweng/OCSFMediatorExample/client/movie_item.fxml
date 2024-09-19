@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="posterImage" fitHeight="100" fitWidth="80" />
+        <VBox alignment="CENTER_LEFT" spacing="10">
+            <children>
+                <Label fx:id="titleLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                <Label fx:id="descriptionLabel" wrapText="true" />
+                <Label fx:id="showTimeLabel" />
+            </children>
+        </VBox>
+    </children>
+</HBox>

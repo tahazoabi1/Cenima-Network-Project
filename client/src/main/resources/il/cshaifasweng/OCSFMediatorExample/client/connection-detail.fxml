@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ConnectionDetail"
+      alignment="CENTER" spacing="20.0" prefHeight="400.0" prefWidth="600.0">
+
+   <Label alignment="CENTER" text="Enter the server address" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+   <VBox spacing="10.0" alignment="CENTER">
+      <Label alignment="CENTER" text="Host" style="-fx-font-size: 21;" />
+      <TextField fx:id="hostAddress" promptText="enter the host address" maxWidth="200.0" />
+      <Label fx:id="emptyAddressLabel" text="you didn't enter the address!" textFill="red" visible="false" />
+      <Label fx:id="invalidAddressLabel" text="invalid host address!" textFill="red" visible="false" />
+   </VBox>
+
+   <VBox spacing="10.0" alignment="CENTER">
+      <Label alignment="CENTER" text="Port" style="-fx-font-size: 21;" />
+      <TextField fx:id="portNum" promptText="enter the port" maxWidth="200.0" />
+      <Label fx:id="emptyPortLabel" text="you didn't enter the number!" textFill="red" visible="false" />
+      <Label fx:id="invalidPortLabel" text="invalid port number!" textFill="red" visible="false" />
+   </VBox>
+
+   <Button fx:id="connectToServerBtn" mnemonicParsing="false" onAction="#connectToServer" text="Connect"
+           style="-fx-font-size: 19; -fx-font-weight: bold;" maxWidth="150.0" />
+
+</VBox>
