@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,7 +13,6 @@ import org.hibernate.HibernateException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -30,6 +30,29 @@ public class ConnectToDataBase {
         }
         return sessionFactory;
     }
+
+    public static void initializeDatabase() throws HibernateException {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            SessionFactory sessionFactory = getSessionFactory();
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+
+            // Example: Clear specific tables or refresh schema
+            // session.createQuery("DELETE FROM Movie").executeUpdate();
+            // session.createQuery("DELETE FROM User").executeUpdate();
+
+            transaction.commit();  // Commit changes to make sure they are applied
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();  // Ensure rollback on error
+            throw new HibernateException("Failed to initialize database", e);
+        } finally {
+            if (session != null && session.isOpen()) session.close();  // Ensure session is closed
+        }
+    }
+
+
 
     // Fetch all movies from the database
     public static List<Movie> getAllMovies() throws Exception {
@@ -138,4 +161,49 @@ public class ConnectToDataBase {
         List<Movie> movies = session.createQuery(query).getResultList();
         return movies.isEmpty() ? null : movies.get(0);
     }
+
+    //    public static User getUserByEmailAndPassword(String email, String password) throws Exception {
+//        Session session = null;
+//        try {
+//            session = getSessionFactory().openSession();
+//            session.beginTransaction();
+//
+//            CriteriaBuilder builder = session.getCriteriaBuilder();
+//            CriteriaQuery<User> query = builder.createQuery(User.class);
+//            Root<User> root = query.from(User.class);
+//
+//            // Check email and password
+//            query.select(root).where(
+//                    builder.and(
+//                            builder.equal(root.get("email"), email),
+//                            builder.equal(root.get("password"), password)
+//                    )
+//            );
+//
+//            List<User> users = session.createQuery(query).getResultList();
+//            session.getTransaction().commit();
+//
+//            if (!users.isEmpty()) {
+//                User user = users.get(0);
+//                System.out.println("Found user in database: " + user.getEmail() + " with password: " + user.getPassword()); // Add this line to debug
+//                return user;  // Return the first matching user
+//            }
+//            System.out.println("No user found with email: " + email + " and password: " + password); // Add this line to debug
+//            return null;  // No user found
+//        } catch (Exception e) {
+//            if (session != null && session.getTransaction().isActive()) {
+//                session.getTransaction().rollback();
+//            }
+//            throw e;  // Rethrow exception
+//        } finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//
+//    }
+
 }
+
+
+
