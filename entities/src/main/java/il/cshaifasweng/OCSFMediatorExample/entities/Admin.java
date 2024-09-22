@@ -11,6 +11,7 @@ public class Admin extends User {
 
     public Admin(String name, String email, String password) {
         super(name, email, password);
+
     }
 
     // Additional methods for admin-specific actions
@@ -24,5 +25,8 @@ public class Admin extends User {
 
     public void updateMovie(Movie movie) {
         // Admin can update a movie in the database
+    }
+
+    public void addAdmin(Admin admin) {
     }
 }

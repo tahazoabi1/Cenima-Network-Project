@@ -24,6 +24,9 @@ public class User implements Serializable {
     @Column(name = "loggedIn")
     private boolean loggedIn;
 
+    @Column(name = "isAdmin")
+    private boolean isAdmin;
+
     public User() {}
 
     public User(String name, String email, String password) {
@@ -31,6 +34,7 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.loggedIn = false;
+        isAdmin = this instanceof Admin;
     }
 
     // Getters and setters for the fields
