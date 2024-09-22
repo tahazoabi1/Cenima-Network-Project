@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Admin;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import org.hibernate.Session;
@@ -24,7 +23,7 @@ public class ConnectToDataBase {
     private static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             Configuration configuration = new Configuration();
-            configuration.addAnnotatedClass(Movie.class).addAnnotatedClass(User.class).addAnnotatedClass(Admin.class);
+            configuration.addAnnotatedClass(Movie.class).addAnnotatedClass(User.class);
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
@@ -103,23 +102,12 @@ public class ConnectToDataBase {
     public static User getUserByEmail(String email) {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
-
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
-            query.select(root).where(builder.equal(root.get("email"), email));
-
+            CriteriaQuery<User> query = getUserByEmailQuery(session, email);
             List<User> users = session.createQuery(query).getResultList();
             session.getTransaction().commit();
-
-            if (!users.isEmpty()) {
-                User user = users.get(0);
-                if (user instanceof Admin) {
-                    return (Admin) user;  // Return as Admin if it's an Admin
-                }
-                return user;  // Return as a regular User
-            }
-            return null;
+            return users.isEmpty() ? null : users.get(0);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find user by email", e);
         }
     }
 
@@ -144,21 +132,16 @@ public class ConnectToDataBase {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
             User user = getUserByEmail(email);
-
             if (user != null) {
-                System.out.println("Updating login status for: " + email + " (type: " + (user instanceof Admin ? "Admin" : "User") + ")");
                 user.setLoggedIn(status);
-                session.update(user);  // This should work for both Admin and User
+                session.update(user);
                 session.getTransaction().commit();
                 System.out.println("Login status updated for: " + email);
-            } else {
-                System.out.println("No user found for login status update: " + email);
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to update login status", e);
         }
     }
-
 
     // Helper method to get user by email query
     private static CriteriaQuery<User> getUserByEmailQuery(Session session, String email) {

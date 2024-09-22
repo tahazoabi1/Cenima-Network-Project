@@ -23,14 +23,13 @@ public class StartController {
         checkLoginStatus();
     }
 
-
     private void loadNavBar() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("nav-bar.fxml"));
         Pane navBar = loader.load();
         navBarContainer.getChildren().add(navBar);
     }
 
-    public void checkLoginStatus() {
+    private void checkLoginStatus() {
         boolean isLoggedIn = SimpleClient.getClient().isLoggedIn();
         loginBtn.setVisible(!isLoggedIn);
         registerBtn.setVisible(!isLoggedIn);

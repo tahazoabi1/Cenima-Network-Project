@@ -45,7 +45,7 @@ public class App extends Application {
         if (SimpleClient.getClient().isLoggedIn()) {
             try {
                 // Send logout request to the server
-                String email = SimpleClient.getClient().getCurrentUser().getEmail();
+                String email = SimpleClient.getClient().getEmail();
                 if (email != null) {
                     SimpleClient.getClient().sendLogoutRequest(email);
                 }
@@ -60,15 +60,6 @@ public class App extends Application {
             stage.close();
         }
     }
-
-
-
-    public static <T> T getController(String fxml) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        loader.load();  // Load the FXML file
-        return loader.getController();  // Return the associated controller
-    }
-
 
 
 
