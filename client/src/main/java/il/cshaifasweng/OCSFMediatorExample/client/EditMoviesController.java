@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +18,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListMovies {
+public class EditMoviesController {
 
     @FXML
     private AnchorPane navBarContainer; // Placeholder for the nav-bar
@@ -39,18 +38,18 @@ public class ListMovies {
 
     private Movie movie;
 
-    private static ListMovies instance;
+    private static EditMoviesController instance;
 
     public static List<Movie> movies = new ArrayList<>();
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     // Constructor
-    public ListMovies() {
+    public EditMoviesController() {
         instance = this;  // Assign the instance when the controller is created
     }
 
     // Provide access to the instance
-    public static ListMovies getInstance() {
+    public static EditMoviesController getInstance() {
         return instance;
     }
 
