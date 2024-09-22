@@ -5,17 +5,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_admin_gen")
-    @SequenceGenerator(
-            name = "user_admin_gen",
-            sequenceName = "user_admin_sequence",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
@@ -40,7 +34,7 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.loggedIn = false;
-        this.isAdmin = false;  // By default, not an admin
+        isAdmin = this instanceof Admin;
     }
 
     // Getters and setters for the fields
@@ -82,8 +76,5 @@ public class User implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-
-    public boolean isAdmin() {return isAdmin;}
-    public void setAdmin(boolean admin) {this.isAdmin = admin;}
 
 }

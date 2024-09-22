@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Admin;
 import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import il.cshaifasweng.OCSFMediatorExample.entities.User;
 import javafx.application.Platform;
@@ -16,7 +15,8 @@ import java.util.List;
 public class SimpleClient extends AbstractClient {
 
 	private static SimpleClient client = null;
-	private User currentUser;  // Store the currently logged-in user (could be Admin or User)
+	private boolean loggedIn = false;
+	private String email;  // Store the email of the currently logged-in user
 
 
 	private SimpleClient(String host, int port) {
@@ -59,24 +59,14 @@ public class SimpleClient extends AbstractClient {
 
 
 	private void handleRegistrationSuccess(String message) {
-		String email = message.split("!")[1].trim();
-
-		// Check if the user is an Admin (server will append "[Admin]" in the message)
-		if (message.contains("[Admin]")) {
-			this.currentUser = new Admin();
-		} else {
-			this.currentUser = new User();
-		}
-		this.currentUser.setEmail(email);
-		this.currentUser.setLoggedIn(true);
-
+		this.loggedIn = true;
+		this.email = message.split("!")[1];
 		try {
-			App.setRoot("edit-movies");
+			App.setRoot("list-movies");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	private void handleRegistrationFailure(String message) {
 		String errorMessage = message.split(":")[1].trim();  // Get the reason for registration failure
@@ -92,24 +82,15 @@ public class SimpleClient extends AbstractClient {
 
 
 	private void handleLoginSuccess(String message) {
-		String email = message.split("!")[1].trim();
-
-		// Check if the user is an Admin (server will append "[Admin]" in the message)
-		if (message.contains("[Admin]")) {
-			this.currentUser = new Admin();
-		} else {
-			this.currentUser = new User();
-		}
-		this.currentUser.setEmail(email);
-		this.currentUser.setLoggedIn(true);
-
+		this.email = message.split("!")[1].trim();
+		this.loggedIn = true;
 		try {
-			App.setRoot("edit-movies");
+			App.setRoot("list-movies");
+			LoginController.getInstance().showAlert(Alert.AlertType.INFORMATION, "Success", "Login Successful!");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	private void handleLoginFailure(String message) {
 		// Extract the reason for login failure from the message
@@ -126,47 +107,30 @@ public class SimpleClient extends AbstractClient {
 
 
 	private void handleLogoutSuccess() {
-		System.out.println("Logout successful for: " + currentUser.getEmail());
-
-		// Reset current user details
-		currentUser = null;
-
-		Platform.runLater(() -> {
-			try {
-				// Set the root to the start page
-				App.setRoot("start");
-
-				// Ensure the button visibility is updated after logout
-				NavBarController navController = App.getController("nav-bar"); // Assuming this gets the NavBarController
-				navController.updateButtonVisibility();
-
-				StartController startController = App.getController("start");  // Assuming this gets the StartController
-				startController.checkLoginStatus();  // This ensures buttons in the start page are updated
-
-				System.out.println("UI updated after logout.");
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		});
+		this.loggedIn = false;
+		this.email = null;
+		try {
+			App.setRoot("start");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
-
 
 	private void handleMovieList(List<Movie> movieList) {
-		EditMoviesController.movies.clear();
-		EditMoviesController.movies.addAll(movieList);
-		EditMoviesController.getInstance().updateMoviesListView();
+		ListMovies.movies.clear();
+		ListMovies.movies.addAll(movieList);
+		ListMovies.getInstance().updateMoviesListView();
 	}
 
-	public boolean isAdmin() {
-		return currentUser instanceof Admin;
+
+	public String getEmail(){
+		return this.email;
 	}
+
+
 
 	public boolean isLoggedIn() {
-		return currentUser != null && currentUser.getLoggedIn();
-	}
-
-	public User getCurrentUser() {
-		return currentUser;
+		return loggedIn;
 	}
 
 
