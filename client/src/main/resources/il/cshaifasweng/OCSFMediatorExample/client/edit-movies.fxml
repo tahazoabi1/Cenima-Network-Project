@@ -12,7 +12,7 @@
 <AnchorPane prefHeight="597.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EditMoviesController">
    <children>
       <!-- Placeholder for the navigation bar -->
-      <AnchorPane fx:id="navBarContainer" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane fx:id="navBarContainer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
       <VBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="50">
          <ListView fx:id="moviesList" VBox.vgrow="ALWAYS" />
@@ -23,6 +23,11 @@
          <HBox spacing="10">
             <Button fx:id="updateShowTimeBTN" onAction="#updateShowTime" text="Update Show Time" />
             <Label fx:id="updatedShowTimeLBL" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="26.0" prefWidth="460.0">
+               <children>
+                  <Button fx:id="selectMovieBtn" layoutX="376.0" layoutY="1.0" mnemonicParsing="false" onAction="#selectMovie" text="Select Movie" />
+               </children>
+            </Pane>
          </HBox>
       </VBox>
    </children>

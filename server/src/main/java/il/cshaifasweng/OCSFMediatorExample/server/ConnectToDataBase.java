@@ -43,7 +43,8 @@ public class ConnectToDataBase {
             // Example: Clear specific tables or refresh schema
             // session.createQuery("DELETE FROM Movie").executeUpdate();
             // session.createQuery("DELETE FROM User").executeUpdate();
-
+        Admin admin = new Admin("admin", "admin@admin.com", "admin");
+        session.save(admin);
             transaction.commit();  // Commit changes to make sure they are applied
         } catch (HibernateException e) {
             if (transaction != null) transaction.rollback();  // Ensure rollback on error

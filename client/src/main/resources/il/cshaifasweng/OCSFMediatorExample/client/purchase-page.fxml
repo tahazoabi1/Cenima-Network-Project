@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PurchaseController">
+   <children>
+      <AnchorPane layoutX="48.0" layoutY="39.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../css/purchase-page.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="558.0" style="-fx-border-color: red;">
+               <children>
+                  <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="134.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="20.0" layoutY="14.0" prefHeight="18.0" prefWidth="77.0" text="Movie Name:" />
+                        <Label layoutX="19.0" layoutY="47.0" prefHeight="18.0" prefWidth="40.0" text="Date:" />
+                        <Label layoutX="101.0" layoutY="47.0" prefHeight="18.0" prefWidth="98.0" text="Title" />
+                        <Label layoutX="101.0" layoutY="14.0" prefHeight="18.0" prefWidth="98.0" text="Title" />
+                        <Text layoutX="19.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket  Price:" />
+                        <Text layoutX="101.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </AnchorPane>
+                  <ImageView fitHeight="124.0" fitWidth="119.0" layoutX="411.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
+                  <AnchorPane layoutX="222.0" layoutY="12.0" prefHeight="124.0" prefWidth="182.0">
+                     <children>
+                        <Text layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summury:" />
+                        <TextFlow layoutY="22.0" prefHeight="101.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="14.0" layoutY="186.0" prefHeight="204.0" prefWidth="558.0" style="-fx-border-color: black;">
+               <children>
+                  <Button layoutX="465.0" layoutY="144.0" mnemonicParsing="false" onMouseClicked="#purchaseATicket" prefHeight="45.0" prefWidth="78.0" text="Purchase" />
+                  <Text layoutX="14.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tickets Number:" wrappingWidth="98.40000000000009" />
+                  <TextField layoutX="116.0" layoutY="40.0" />
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -172,4 +173,17 @@ public class EditMoviesController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    void selectMovie(ActionEvent event) throws IOException {
+        Movie selectedMovie = moviesList.getSelectionModel().getSelectedItem();
+        if (selectedMovie == null) {
+            showCompletionMessage("Error", "Please select a movie first.");
+            return;
+        }
+        else{
+            App.setRoot("purchase-page");
+            PurchaseController.getInstance().setMovie(selectedMovie);
+        }
+    }
+
 }
